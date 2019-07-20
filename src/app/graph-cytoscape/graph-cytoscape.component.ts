@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
 import { IItemRefibra } from "src/app/basic/itemRefibra.interface"
 import { IItemRefibraRelation } from '../basic/itemRefibraRelation.interface';
-import { getAllDebugNodes } from '@angular/core/src/debug/debug_node';
 
-declare var cytoscape: any;
+const prefix = "http://metadadorefibra.ufpe/";
 const nodesRefibra = [] as  any;
 const relationRefibra = [] as  any;
+declare var cytoscape: any;
+var cytoscapeStyle: any;
 
 @Component({
   selector: 'app-graph-cytoscape-component',
@@ -14,20 +15,13 @@ const relationRefibra = [] as  any;
   styleUrls: ['./graph-cytoscape.component.css' ]
 })
 export class GraphCytoscapeComponent implements OnInit {
-
+  itensRdf: IItemRefibra[];
+  itensRdfRelation: IItemRefibraRelation[];
   constructor(    
     public restApi: FusekirefibraService,
   ) {}
-  
-  
-  
-  
-  itensRdf: IItemRefibra[];
-  itensRdfRelation: IItemRefibraRelation[];
-
-
-   /*************************** */            
-   async highlight( node ) : Promise<void>{
+       
+  highlight(node){
     var allEles = cytoscape.cy.elements();
     var layoutPadding = 50;
     var aniDur = 500;
@@ -92,19 +86,17 @@ export class GraphCytoscapeComponent implements OnInit {
     .then( fit )
     .then( showOthersFaded )
     .then( linas );
-  }
-  async  getAllItens() : Promise<void>{
-    this.restApi.getAllItens()
+  } 
+  getAllItens(){
+      this.restApi.getAllItens()
       .subscribe(
         (data: IItemRefibra[]) =>  { //start of (1)
           this.itensRdf = data;
           if(this.itensRdf.length > 0){
             this.itensRdf.forEach((element)=>{
-                nodesRefibra.push({ data: { id: element.item, foo: 3, bar: 5, baz: 2 } });
-            });
-            
-          this.getAllItensRelation();
-             
+                nodesRefibra.push({ data: { id: element.item.replace(prefix,""), nameImg: element.image} });
+            });   
+            this.getAllItensRelation();        
           }
           else
            console.log("oi");
@@ -113,19 +105,18 @@ export class GraphCytoscapeComponent implements OnInit {
         ()             => console.log('all data gets') //(3) second argument
       );
   }
-
-  async getAllItensRelation() : Promise<void> {
+  getAllItensRelation(){
+    return new Promise(()=>{
     this.restApi.getAllItensRelation()
       .subscribe(
         (data: IItemRefibraRelation[]) =>  { //start of (1)
           this.itensRdfRelation = data;
           if(this.itensRdfRelation.length > 0){
              this.itensRdfRelation.forEach(element=>{
-              relationRefibra.push( { data: { source: element.item1, target: element.item2 } });
+              relationRefibra.push( { data: { source: element.item1.replace(prefix,""), target: element.item2.replace(prefix,""), label:  (element.obj.replace(prefix, "").replace("http://pt.dbpedia.org/resource/","").replace("http://pt.wikipedia.org/wiki/","") )}, classes: 'autorotate' } );
             });
-             
-            this.loadCytoscape();
-             
+            //this.loadCytoscape();
+            this.loadStyle();
           }
           else
            console.log("oi");
@@ -133,100 +124,126 @@ export class GraphCytoscapeComponent implements OnInit {
         (error: any)   => console.log(error), //(2) second argument
         ()             => console.log('all data gets') //(3) second argument
       );
+    });
   }
+  loadStyle(){
+    
+    cytoscapeStyle  = cytoscape.stylesheet()
+    .selector('node')
+    .css({
+      'height': 50,
+      'width': 50,
+      'background-fit': 'cover',
+      'border-color': '#000',
+      'border-width': 3,
+      'border-opacity': 0.5
+    })
+    .selector('.autorotate')
+    .css({
+      "edge-text-rotation": "autorotate"
+    }) 
+   
+    .selector('node:selected')
+    .css({
+      'width': 80,
+    'height': 80,
+    'border-color': 'rgb(187, 219, 247)',
+    'border-opacity': 0.5,
+    'border-width': 10,
+    })
+    .selector('node.highlighted')
+    .css({
+      "min-zoomed-font-size": "0",
+      'z-index': '9999'
+    })
+    .selector('.edgehighlighted')
+    .css({
+      'z-index': '9999',
+      'line-color': '#ffaaaa',
+      'font-size': 15,
+      'color': '#000',
+      "opacity": "1",
+      'width': 5 
+    })
+    .selector('.hidden')
+    .css({
+      "display": "none"
+    })
+    .selector('.faded')
+    .css({
+      "events": "no"
+    })
+    .selector('node.faded')
+    .css({
+      "opacity": "0.08"
+    })
+    .selector('edge.faded')
+    .css({
+      "opacity": "0.06"
+    })
+  .selector('edge')
+    .css({
+      'curve-style': 'bezier',
+      'width': 4,
+      'font-size': 12,
+      'line-color': '#d1d1e0',
+      'target-arrow-color': '#ffaaaa',
+      'label': 'data(label)' 
+    });
+     nodesRefibra.forEach(element => {
+        cytoscapeStyle.selector('#' +element.data.id.replace(prefix,""))
+          .css({
+          'background-image': "url(data:image/jpg;base64," +(element.data.nameImg)+ ")"
+        });
+      });
 
-  async loadCytoscape() : Promise<void>{
+        this.loadCytoscape(); 
+  }
+  loadCytoscape(){
+    
     cytoscape.cy = cytoscape({
       container: document.getElementById('cy'),
-
-      style: cytoscape.stylesheet()
-        .selector('node')
-        .css({
-          'width': '60px',
-          'height': '60px',
-          'content': 'data(id)',
-          'pie-size': '80%',
-          'pie-1-background-color': '#E8747C',
-          'pie-1-background-size': 'mapData(foo, 0, 10, 0, 100)',
-          'pie-2-background-color': '#74CBE8',
-          'pie-2-background-size': 'mapData(bar, 0, 10, 0, 100)',
-          'pie-3-background-color': '#74E883',
-          'pie-3-background-size': 'mapData(baz, 0, 10, 0, 100)'
-        })
-        .selector('edge')
-        .css({
-          'curve-style': 'bezier',
-          'width': 4,
-          'target-arrow-shape': 'triangle',
-          'opacity': 0.5
-        })
-        .selector(':selected')
-        .css({
-          'background-color': 'black',
-          'line-color': 'black',
-          'target-arrow-color': 'black',
-          'source-arrow-color': 'black',
-          'opacity': 1
-        })
-        .selector('.faded')
-        .css({
-          'opacity': 0.25,
-          'text-opacity': 0
-        }),
-
+      style: cytoscapeStyle ,
       elements: {
         nodes: nodesRefibra,
         edges: relationRefibra        
       },
-
       layout: {
         name: 'circle',
         padding: 10
-      },
-     
-    });
-
+      } 
+    });    
+    
      /*****************EVENTS */
      cytoscape.cy.on('doubleTap', function(event, originalTapEvent) {    
       alert("double-click");
      });
 
      var previousTapStamp = 0;
-     cytoscape.cy.on('tap', 'node', (e)=>{     
-      this.highlight(this);   
+     cytoscape.cy.on('tap', 'node', (e)=>{ 
+       this.highlight(e.target);   
       
-      var doubleClickDelayMs = 350;
-     
-      var currentTapStamp = e.timeStamp;
-      var msFromLastTap = currentTapStamp - previousTapStamp;
-  
-      console.log("last: " +msFromLastTap);
-      console.log("Delay: " + doubleClickDelayMs);
+        var doubleClickDelayMs = 350;      
+        var currentTapStamp = e.timeStamp;
+        var msFromLastTap = currentTapStamp - previousTapStamp;
+    
+        console.log("last: " +msFromLastTap);
+        console.log("Delay: " + doubleClickDelayMs);
 
-      if (msFromLastTap < doubleClickDelayMs) {
-          e.target.trigger('doubleTap', e);
-      }
-      else{
-        alert("click");
-      }
-      previousTapStamp = currentTapStamp;
+        if (msFromLastTap < doubleClickDelayMs) {
+            e.target.trigger('doubleTap', e);
+        }
+        else{
+          //alert("click");
+        }
+        previousTapStamp = currentTapStamp;
       
     });
     /************************** */
 
 
   }
-
-   ngOnInit(){
-
- this.getAllItens();
-    
-    console.log(nodesRefibra);
-    console.log(relationRefibra);
-      
-         
-           
-           /**************************** */
-    }  
-  }
-  
+  ngOnInit(){
+    this.getAllItens();
+  }  
+}  
