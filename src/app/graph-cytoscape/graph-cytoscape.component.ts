@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
 import { IItemRefibra } from "src/app/basic/itemRefibra.interface"
 import { IItemRefibraRelation } from '../basic/itemRefibraRelation.interface';
+import { ActivatedRoute, Router } from '@angular/router'
 
 const prefix = "http://metadadorefibra.ufpe/";
 const nodesRefibra = [] as  any;
@@ -19,6 +20,8 @@ export class GraphCytoscapeComponent implements OnInit {
   itensRdfRelation: IItemRefibraRelation[];
   constructor(    
     public restApi: FusekirefibraService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
        
   highlight(node){
@@ -113,7 +116,17 @@ export class GraphCytoscapeComponent implements OnInit {
           this.itensRdfRelation = data;
           if(this.itensRdfRelation.length > 0){
              this.itensRdfRelation.forEach(element=>{
-              relationRefibra.push( { data: { source: element.item1.replace(prefix,""), target: element.item2.replace(prefix,""), label:  (element.obj.replace(prefix, "").replace("http://pt.dbpedia.org/resource/","").replace("http://pt.wikipedia.org/wiki/","") )}, classes: 'autorotate' } );
+              let item1 = element.item1.replace(prefix,"")
+              let item2 = element.item2.replace(prefix,"")
+              let label =  element.obj.replace(prefix, "").replace("http://pt.dbpedia.org/resource/","").replace("http://pt.wikipedia.org/wiki/","") ;
+
+              if(relationRefibra.some(x => x.data.source === item2
+                && x.data.target === item1
+                && x.data.label === label
+              ) === false){
+                relationRefibra.push( { data: { source: item1, target: item2, label:  label}, classes: 'autorotate' } ); 
+              }
+              
             });
             //this.loadCytoscape();
             this.loadStyle();
@@ -244,6 +257,61 @@ export class GraphCytoscapeComponent implements OnInit {
 
   }
   ngOnInit(){
-    this.getAllItens();
+    this.route
+      .queryParams
+      .subscribe(params => {
+        let valueSearch = params['valueSearch'];
+        if(valueSearch !== undefined){
+          this.getItensByRelationName(valueSearch);
+        }
+        else{
+          this.getAllItens();
+        }
+      });
+
+    
   }  
+
+  getItensByRelationName(valueSearch: string){
+    this.restApi.getItensByRelationName(valueSearch)
+    .subscribe(
+      (data: IItemRefibra[]) =>  { //start of (1)
+        this.itensRdf = data;
+        
+        if(this.itensRdf.length > 0){
+           this.itensRdf.forEach((element)=>{
+               nodesRefibra.push({ data: { id: element.title.replace(prefix,""), nameImg: element.image} });
+               element.listRelationItem.forEach(relation => {
+              
+                let item1 = relation.item1.replace(prefix,"")
+                let item2 = relation.item2.replace(prefix,"")
+                let label =  relation.obj.replace(prefix, "").replace("http://pt.dbpedia.org/resource/","").replace("http://pt.wikipedia.org/wiki/","") ;
+
+                if(this.itensRdf.some(x => x.title === item1) &&
+                  this.itensRdf.some(x => x.title === item2)){
+
+                    if(relationRefibra.some(x => x.data.source === item2
+                      && x.data.target === item1
+                      && x.data.label === label
+                    ) === false){
+                      relationRefibra.push( { data: { source: item1, target: item2, label:  label}, classes: 'autorotate' } ); 
+                    }
+                    
+                }
+               });
+              
+              });   
+
+              console.log(relationRefibra);
+                 
+
+              this.loadStyle();
+        }
+        else
+         console.log("oi");
+      }, //end of (1)
+      (error: any)   => console.log(error), //(2) second argument
+      ()             => console.log('all data gets') //(3) second argument
+    );
+}
 }  

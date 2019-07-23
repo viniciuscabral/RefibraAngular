@@ -9,6 +9,8 @@ import { InsertItemComponent } from './insert-item/insert-item.component';
 import { GraphCytoscapeComponent } from './graph-cytoscape/graph-cytoscape.component';
 import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,9 +22,11 @@ import { RouterModule } from '@angular/router';
     HomeComponent
   ],
   imports: [
+    NgbModule,
+    FormsModule,
     BrowserModule,
     AppRoutingModule, 
-    HttpClientModule,   
+    HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'AddItem' , component: InsertItemComponent},

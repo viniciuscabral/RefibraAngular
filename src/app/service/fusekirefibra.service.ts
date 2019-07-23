@@ -21,5 +21,15 @@ export class FusekirefibraService {
       console.log('getting all Itens Relation todos from the server');
       return this.http.get<IItemRefibraRelation[]>(`${this.base_url}/ItensRelation`);
   }
+
+  getAllRelationsNames(): Observable<IItemRefibra[]>{
+    console.log('getting all relations name');
+    return this.http.get<[]>(`${this.base_url}/GetAllRelationsNames`);
+  }
+
+  getItensByRelationName(valueSearch): Observable<IItemRefibra[]>{
+    console.log('getting all relations name');
+    return this.http.get<IItemRefibra[]>(`${this.base_url}/GetItensByRelationName?relatioName=${valueSearch}`);
+  }
 }
 
