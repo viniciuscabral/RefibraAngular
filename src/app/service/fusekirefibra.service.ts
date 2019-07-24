@@ -32,9 +32,9 @@ export class FusekirefibraService {
     return this.http.get<IItemRefibra[]>(`${this.base_url}/GetItensByRelationName?relatioName=${valueSearch}`);
   }
 
-  getItensByName(valueSearch): Observable<IItemRefibra[]>{
+  getItensByName(itemName): Observable<IItemRefibra[]>{
     console.log('getting especific item');
-    return this.http.get<IItemRefibra[]>(`${this.base_url}/ItensByName?itemName=${valueSearch}`);
+    return this.http.get<IItemRefibra[]>(`${this.base_url}/ItensByName?itemName=${itemName}`);
   }
 }
 
