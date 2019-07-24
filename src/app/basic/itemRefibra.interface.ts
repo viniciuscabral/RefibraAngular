@@ -4,7 +4,7 @@ export interface IItemRefibra {
   item: string;
   title: string;
   image: string;
-  text: string;
+  text: string[];
   listRelationItem: IItemRefibraRelation[]
   listRelation: string[]
 }

@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  refibra-angular:
+    container_name: refibra-angular
+    hostname: refibraangular
+    build: .
+    ports:
+      - '4201:4201'

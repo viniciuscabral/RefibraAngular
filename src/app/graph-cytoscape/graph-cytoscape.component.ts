@@ -3,7 +3,7 @@ import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
 import { IItemRefibra } from "src/app/basic/itemRefibra.interface"
 import { IItemRefibraRelation } from '../basic/itemRefibraRelation.interface';
 import { ActivatedRoute, Router } from '@angular/router'
-import { NgxUiLoaderService } from 'ngx-ui-loader'; 
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 const prefix = "http://metadadorefibra.ufpe/";
 var nodesRefibra = [] as  any;
@@ -23,7 +23,7 @@ export class GraphCytoscapeComponent implements OnInit {
     public restApi: FusekirefibraService,
     private route: ActivatedRoute,
     private router: Router,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,    
   ) {}
        
    ngOnInit(){
@@ -103,7 +103,6 @@ export class GraphCytoscapeComponent implements OnInit {
       });
   }
    async getItensByRelationName(valueSearch: string){
-
     return new Promise((resolve,reject) => { 
     this.restApi.getItensByRelationName(valueSearch)
     .subscribe(
@@ -138,6 +137,19 @@ export class GraphCytoscapeComponent implements OnInit {
       }
       
     );
+    });
+  }
+   async getItemByname(itemName: string){
+    return new Promise((resolve,reject) => { 
+      this.restApi.getItensByName(itemName)
+      .subscribe(
+        data =>  {
+          let itemRdf: any = data;
+          alert(itemRdf.text);
+          resolve();
+        },
+        error => {}
+      )
     });
   }
 
@@ -230,8 +242,17 @@ export class GraphCytoscapeComponent implements OnInit {
     });    
     this.ngxService.stop();
      /*****************EVENTS */
-     cytoscape.cy.on('doubleTap', function(event, originalTapEvent) {    
-      alert("double-click");
+     //cytoscape.cy.on('doubleTap', function(event, originalTapEvent) {    
+      //alert("double-click");
+     // alert(event.target.id());
+      //alert(event.itemName);
+      //this.getItemByname(prefix+event.target.id()).then();
+      //Promise.all([this.getItensByRelationName(valueSearch)]).then(()=>this.loadStyle())
+     // Promise.call(this.getAllItens());
+     //});
+
+     cytoscape.cy.on('doubleTap', (event,originalTapEvent)=>{     
+        Promise.call(this.getItemByname(prefix+event.target.id()));
      });
 
      var previousTapStamp = 0;
@@ -241,10 +262,6 @@ export class GraphCytoscapeComponent implements OnInit {
         var doubleClickDelayMs = 350;      
         var currentTapStamp = e.timeStamp;
         var msFromLastTap = currentTapStamp - previousTapStamp;
-    
-        console.log("last: " +msFromLastTap);
-        console.log("Delay: " + doubleClickDelayMs);
-
         if (msFromLastTap < doubleClickDelayMs) {
             e.target.trigger('doubleTap', e);
         }

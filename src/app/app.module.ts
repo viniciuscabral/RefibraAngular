@@ -37,7 +37,8 @@ import { NgxUiLoaderModule, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule  } fr
       { path: 'About' , component: AboutComponent },
       { path: 'GraphCytoscape', component: GraphCytoscapeComponent}
     ])
-  ],
+  ],  
+  entryComponents: [GraphCytoscapeComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

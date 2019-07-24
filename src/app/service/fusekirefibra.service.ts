@@ -12,14 +12,14 @@ export class FusekirefibraService {
   base_url: string = 'http://api.devcabral.com.br';
 
     constructor(private http: HttpClient) { } 
-    getAllItens(): Observable<IItemRefibra[]>{
-        console.log('getting all todos from the server');
-        return this.http.get<IItemRefibra[]>(`${this.base_url}/GetAllItens`);
-    }
+  getAllItens(): Observable<IItemRefibra[]>{
+      console.log('getting all todos from the server');
+      return this.http.get<IItemRefibra[]>(`${this.base_url}/GetAllItens`);
+  }
 
-    getAllItensRelation(): Observable<IItemRefibraRelation[]>{
-      console.log('getting all Itens Relation todos from the server');
-      return this.http.get<IItemRefibraRelation[]>(`${this.base_url}/ItensRelation`);
+  getAllItensRelation(): Observable<IItemRefibraRelation[]>{
+    console.log('getting all Itens Relation todos from the server');
+    return this.http.get<IItemRefibraRelation[]>(`${this.base_url}/ItensRelation`);
   }
 
   getAllRelationsNames(): Observable<IItemRefibra[]>{
@@ -30,6 +30,11 @@ export class FusekirefibraService {
   getItensByRelationName(valueSearch): Observable<IItemRefibra[]>{
     console.log('getting all relations name');
     return this.http.get<IItemRefibra[]>(`${this.base_url}/GetItensByRelationName?relatioName=${valueSearch}`);
+  }
+
+  getItensByName(valueSearch): Observable<IItemRefibra[]>{
+    console.log('getting especific item');
+    return this.http.get<IItemRefibra[]>(`${this.base_url}/ItensByName?itemName=${valueSearch}`);
   }
 }
 
