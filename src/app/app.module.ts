@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { NgxUiLoaderModule, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule  } from  'ngx-ui-loader';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,9 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     NgbModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderRouterModule,
+    NgxUiLoaderHttpModule,
     FormsModule,
     BrowserModule,
     AppRoutingModule, 
