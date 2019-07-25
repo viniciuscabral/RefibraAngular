@@ -4,7 +4,7 @@ import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
 import {Router} from '@angular/router';
 
-var relationsName : any = [];
+
 
 @Component({
   selector: 'app-home',
@@ -12,20 +12,20 @@ var relationsName : any = [];
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
+  relationsName : any = [];
   @Input()
   @Input('ngModel')
   public valueSearch: any;
-
+  isCollapsed = true;
   searchInInput = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
       map(term => term.length < 1 ? []
-        : relationsName.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+        : this.relationsName.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
     )
     constructor(    
-      public restApi: FusekirefibraService,
+      private restApi: FusekirefibraService,
       private router: Router
     ) {}
 
@@ -33,9 +33,9 @@ export class HomeComponent implements OnInit {
     this.getAllRelationsName();
   }
 
-  search(){
+  search(value){
     //alert(this.valueSearch); 
-    this.router.navigate(["/GraphCytoscape"], { queryParams: {valueSearch: this.valueSearch} })
+    this.router.navigate(["/GraphCytoscape"], { queryParams: {valueSearch: value} })
   }
 
   getAllRelationsName(){
@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
         if(data !== null && data.length > 0){
             lista.forEach(element => {            
               //relationsName.push(element.replace("http://pt.wikipedia.org/wiki/",""));
-              relationsName.push(element);
+              this.relationsName.push(element);
             });
         }       
         else

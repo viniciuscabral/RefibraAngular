@@ -1,0 +1,13 @@
+.imgItem{      
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: cover;
+    align-content: center;
+    height: 200px; 
+    width: 100%; 
+    display: block;
+}
+
+#divImage{
+    text-align: center;
+}

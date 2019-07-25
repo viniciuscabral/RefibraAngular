@@ -7,7 +7,7 @@
                         <input id="typeahead" type="text" class="search-query form-control" 
                         [(ngModel)]="valueSearch" [ngbTypeahead]="searchInInput" placeholder="Search" />
                         <span class="input-group-btn">
-                            <button (click)="search()" class="btn btn-default" type="submit">
+                            <button (click)="search(valueSearch)" class="btn btn-default" type="submit">
                                 <span class="fa fa-search"></span>
                             </button>
                         </span>
@@ -15,5 +15,25 @@
                 </div>
             </div>
         </div>
-   
+    
+    
+        <hr class="my-4">
+            <h5>In a different way</h5> 
+            <button type="button" class="btn btn-link" (click)="isCollapsed = !isCollapsed"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                See all options...
+            </button>
+    <div class="row" style="margin-top: 2pt">  
+        <div id="collapseExample" [ngbCollapse]="isCollapsed">
+    <h2>Item relations</h2>
+    <div class="card">        
+            <div *ngFor="let relation of relationsName">
+                <button style="margin: 2pt" type="button" class="btn btn-outline-primary"
+                 (click)="search(relation)" >
+                    {{ relation }}
+                </button>
+            </div>         
+      </div>   
     </div>
+   </div> 
+</div>

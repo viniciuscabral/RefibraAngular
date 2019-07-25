@@ -25,15 +25,18 @@ export class GraphCytoscapeComponent implements OnInit {
     private router: Router,
     private ngxService: NgxUiLoaderService,    
   ) {}
-       
+   valueSearch: string;
    ngOnInit(){
+    nodesRefibra = [];
+    relationRefibra = []
+    
     this.route
       .queryParams
       .subscribe(params => {
-        let valueSearch = params['valueSearch'];
-        if(valueSearch !== undefined){
+        this.valueSearch = params['valueSearch'];
+        if(this.valueSearch !== undefined){
           this.ngxService.start();
-          Promise.all([this.getItensByRelationName(valueSearch)]).then(()=>this.loadStyle()).
+          Promise.all([this.getItensByRelationName(this.valueSearch)]).then(()=>this.loadStyle()).
           catch( (error)=>{
               alert(error);
           });          
@@ -72,7 +75,6 @@ export class GraphCytoscapeComponent implements OnInit {
       });
   }
    async getAllItensRelation(){
-
     return new Promise(resolve => {      
     console.log("exec getAllItensRelation");    
     this.restApi.getAllItensRelation()
@@ -139,19 +141,7 @@ export class GraphCytoscapeComponent implements OnInit {
     );
     });
   }
-   async getItemByname(itemName: string){
-    return new Promise((resolve,reject) => { 
-      this.restApi.getItensByName(itemName)
-      .subscribe(
-        data =>  {
-          let itemRdf: any = data;
-          alert(itemRdf.text);
-          resolve();
-        },
-        error => {}
-      )
-    });
-  }
+  
 
    loadStyle(){
     console.log("loadStyle");
@@ -242,17 +232,9 @@ export class GraphCytoscapeComponent implements OnInit {
     });    
     this.ngxService.stop();
      /*****************EVENTS */
-     //cytoscape.cy.on('doubleTap', function(event, originalTapEvent) {    
-      //alert("double-click");
-     // alert(event.target.id());
-      //alert(event.itemName);
-      //this.getItemByname(prefix+event.target.id()).then();
-      //Promise.all([this.getItensByRelationName(valueSearch)]).then(()=>this.loadStyle())
-     // Promise.call(this.getAllItens());
-     //});
-
      cytoscape.cy.on('doubleTap', (event,originalTapEvent)=>{     
-        Promise.call(this.getItemByname(prefix+event.target.id()));
+        //Promise.call(this.getItemByname(prefix+event.target.id()));
+        this.router.navigate(["/PresentItem"], { queryParams: {valueSearch: prefix+event.target.id()} })
      });
 
      var previousTapStamp = 0;

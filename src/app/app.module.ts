@@ -8,6 +8,7 @@ import { AboutComponent } from './about/about.component';
 import { InsertItemComponent } from './insert-item/insert-item.component';
 import { GraphCytoscapeComponent } from './graph-cytoscape/graph-cytoscape.component';
 import { HomeComponent } from './home/home.component';
+import { PresentItemComponent } from './present-item/present-item.component';
 import { RouterModule } from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +21,8 @@ import { NgxUiLoaderModule, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule  } fr
     AboutComponent,
     InsertItemComponent,
     GraphCytoscapeComponent,
-    HomeComponent
+    HomeComponent,
+    PresentItemComponent
   ],
   imports: [
     NgbModule,
@@ -35,7 +37,8 @@ import { NgxUiLoaderModule, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule  } fr
       { path: '', component: HomeComponent },
       { path: 'AddItem' , component: InsertItemComponent},
       { path: 'About' , component: AboutComponent },
-      { path: 'GraphCytoscape', component: GraphCytoscapeComponent}
+      { path: 'GraphCytoscape', component: GraphCytoscapeComponent},
+      { path: 'PresentItem', component: PresentItemComponent}
     ])
   ],  
   entryComponents: [GraphCytoscapeComponent],
