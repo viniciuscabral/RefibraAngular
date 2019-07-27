@@ -3,11 +3,17 @@
 It's a Web Site maked in the REFIBRA's context to try a new experience with relational objects, in this case Postal Stamps. It was developed using Angular 7 + Bootwatch framework and Cytoscape.js to make a ralation item graph. 
 On the main page the user can search by a named relation registered in the repository:
 
+![api](https://github.com/viniciuscabral/RefibraAngular/blob/master/img/pag1.PNG)
+
 After that teh user can operate a new graph gerated with itens relatad with the searched named relation:
+
+![api](https://github.com/viniciuscabral/RefibraAngular/blob/master/img/pag2.PNG)
 
 The user can double-clik on the item an see information about item:
 
-It's possible register and update itens too. With this the user will be a "interagente" like described on the Vinícius' research. Nowadays this sites still in development, for this no have register item page yet.
+![api](https://github.com/viniciuscabral/RefibraAngular/blob/master/img/pag3.PNG)
+
+It will be possible register and update itens too. With this the user will be a "interagente" like described on the Vinícius' research. Nowadays this sites still in development, for this no have register item page yet.
 
 # Context
 This project is son of a great research realise in the context Vinícius Cabral's Master degree in Federal University of Pernambuco (UFPE) under supervison of Dr. Diego Salcedo. Nowadays it stand in developmento until 2020 but has a Abstract like that:
