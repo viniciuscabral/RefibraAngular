@@ -210,7 +210,7 @@ export class GraphCytoscapeComponent implements OnInit {
      nodesRefibra.forEach(element => {
         cytoscapeStyle.selector('#' +element.data.id.replace(prefix,""))
           .css({
-          'background-image': "url(data:image/jpg;base64," +(element.data.nameImg)+ ")"
+          'background-image': "url(https://res.cloudinary.com/dixelsjzs/image/upload/v1565234304/Refibra/" +(element.data.id)+ ".jpg)"
         });
       });
 

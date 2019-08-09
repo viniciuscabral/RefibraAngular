@@ -36,5 +36,10 @@ export class FusekirefibraService {
     console.log('getting especific item');
     return this.http.get<IItemRefibra[]>(`${this.base_url}/ItensByName?itemName=${itemName}`);
   }
+
+  setNewItem(item): Observable<IItemRefibra[]>{
+    console.log('create a new especific item');
+    return this.http.post<IItemRefibra[]>(`${this.base_url}/AddItemAsyn`,item);
+  }
 }
 

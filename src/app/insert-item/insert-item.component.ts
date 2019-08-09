@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
+import { IItemRefibra } from "src/app/basic/itemRefibra.interface"
+import { Guid } from "guid-typescript";
 
 @Component({
   selector: 'app-insert-item',
@@ -7,7 +11,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InsertItemComponent implements OnInit {
 
-  constructor() { }
+  url: any;
+  angForm  = new FormGroup({
+    description: new FormControl(''),
+    imageBase64: new FormControl('')
+  });
+  
+  constructor(    
+    public restApi: FusekirefibraService
+  ) {}
+
+  onSubmit(){ 
+   
+   let id = Guid.create().toString();
+   let obj: IItemRefibra = {item: "", title: id, text: [this.angForm.value.description]
+    ,image: this.angForm.value.imageBase64,listRelation:[],listRelationItem: []};
+  
+    this.setNewItem(obj);
+  }
+
+  async setNewItem(item: IItemRefibra){
+    return new Promise(resolve => {
+      this.restApi.setNewItem(item)
+      .subscribe(
+        (data: any) =>  {
+           resolve();    
+        }, 
+        (error: any)   => console.log(error)
+      );
+      });
+  }
+
+  onFileChanges(evt){
+    this.angForm.patchValue({
+      imageBase64: evt[0].base64
+    });
+    this.url = evt[0].base64;
+  }
 
   ngOnInit() {
   }

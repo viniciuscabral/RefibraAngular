@@ -10,9 +10,12 @@ import { GraphCytoscapeComponent } from './graph-cytoscape/graph-cytoscape.compo
 import { HomeComponent } from './home/home.component';
 import { PresentItemComponent } from './present-item/present-item.component';
 import { RouterModule } from '@angular/router';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgxUiLoaderModule, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule  } from  'ngx-ui-loader';
+import { AlifeFileToBase64Module } from 'alife-file-to-base64';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { NgxUiLoaderModule, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule  } fr
     NgxUiLoaderRouterModule,
     NgxUiLoaderHttpModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
+    AlifeFileToBase64Module,
     AppRoutingModule, 
     HttpClientModule,
     RouterModule.forRoot([
