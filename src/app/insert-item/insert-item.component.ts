@@ -3,6 +3,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
 import { IItemRefibra } from "src/app/basic/itemRefibra.interface"
 import { Guid } from "guid-typescript";
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-insert-item',
@@ -19,25 +21,32 @@ export class InsertItemComponent implements OnInit {
   
   constructor(    
     public restApi: FusekirefibraService
+    ,private ngxService: NgxUiLoaderService
+    ,private router: Router
   ) {}
 
-  onSubmit(){ 
-   
+  onSubmit(){    
    let id = Guid.create().toString();
    let obj: IItemRefibra = {item: "", title: id, text: [this.angForm.value.description]
-    ,image: this.angForm.value.imageBase64,listRelation:[],listRelationItem: []};
-  
+    ,image: this.angForm.value.imageBase64,listRelation:[],listRelationItem: []};  
     this.setNewItem(obj);
   }
 
   async setNewItem(item: IItemRefibra){
+    this.ngxService.start();
     return new Promise(resolve => {
       this.restApi.setNewItem(item)
       .subscribe(
         (data: any) =>  {
+           this.ngxService.stopAll();
+           this.router.navigate(["/Home"])
            resolve();    
         }, 
-        (error: any)   => console.log(error)
+        (error: any)   => 
+        {
+           this.ngxService.stopAll();
+           console.log(error)
+        }
       );
       });
   }

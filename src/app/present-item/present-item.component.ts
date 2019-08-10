@@ -44,7 +44,7 @@ import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
               console.log(this.itemRdf);
               this.listRelations = this.itemRdf.listRelation ;
               this.title = this.itemRdf.title;
-              this.image = this.itemRdf.image;
+              this.image = this.itemRdf.title + '.jpg';
               this.text = this.itemRdf.text[0];
               resolve();
             },

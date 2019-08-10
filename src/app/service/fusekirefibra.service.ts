@@ -9,37 +9,52 @@ import {IItemRefibraRelation} from 'src/app/basic/itemRefibraRelation.interface'
 })
 export class FusekirefibraService {
 
-  base_url: string = 'http://api.devcabral.com.br';
+  //base_url: string = 'http://api.devcabral.com.br';
+  base_url: string = 'http://localhost:47706';
+  data_set: string = 'Refibra';
+  constructor(private http: HttpClient) { } 
 
-    constructor(private http: HttpClient) { } 
   getAllItens(): Observable<IItemRefibra[]>{
+      var target = (document.getElementById('selectDataSet')) as HTMLSelectElement;
+      this.data_set = target.options[target.selectedIndex].text;
+      
       console.log('getting all todos from the server');
-      return this.http.get<IItemRefibra[]>(`${this.base_url}/GetAllItens`);
+      return this.http.get<IItemRefibra[]>(`${this.base_url}/GetAllItens?dataSet=${this.data_set}`);
   }
 
   getAllItensRelation(): Observable<IItemRefibraRelation[]>{
+    var target = (document.getElementById('selectDataSet')) as HTMLSelectElement;
+    this.data_set = target.options[target.selectedIndex].text;
     console.log('getting all Itens Relation todos from the server');
-    return this.http.get<IItemRefibraRelation[]>(`${this.base_url}/ItensRelation`);
+    return this.http.get<IItemRefibraRelation[]>(`${this.base_url}/ItensRelation?dataSet=${this.data_set}`);
   }
 
   getAllRelationsNames(): Observable<IItemRefibra[]>{
+    var target = (document.getElementById('selectDataSet')) as HTMLSelectElement;
+    this.data_set = target.options[target.selectedIndex].text;
     console.log('getting all relations name');
-    return this.http.get<[]>(`${this.base_url}/GetAllRelationsNames`);
+    return this.http.get<[]>(`${this.base_url}/GetAllRelationsNames?dataSet=${this.data_set}`);
   }
 
   getItensByRelationName(valueSearch): Observable<IItemRefibra[]>{
+    var target = (document.getElementById('selectDataSet')) as HTMLSelectElement;
+    this.data_set = target.options[target.selectedIndex].text;
     console.log('getting all relations name');
-    return this.http.get<IItemRefibra[]>(`${this.base_url}/GetItensByRelationName?relatioName=${valueSearch}`);
+    return this.http.get<IItemRefibra[]>(`${this.base_url}/GetItensByRelationName?relatioName=${valueSearch}&dataSet=${this.data_set}`);
   }
 
   getItensByName(itemName): Observable<IItemRefibra[]>{
+    var target = (document.getElementById('selectDataSet')) as HTMLSelectElement;
+    this.data_set = target.options[target.selectedIndex].text;
     console.log('getting especific item');
-    return this.http.get<IItemRefibra[]>(`${this.base_url}/ItensByName?itemName=${itemName}`);
+    return this.http.get<IItemRefibra[]>(`${this.base_url}/ItensByName?itemName=${itemName}&dataSet=${this.data_set}`);
   }
 
   setNewItem(item): Observable<IItemRefibra[]>{
+    var target = (document.getElementById('selectDataSet')) as HTMLSelectElement;
+    this.data_set = target.options[target.selectedIndex].text;
     console.log('create a new especific item');
-    return this.http.post<IItemRefibra[]>(`${this.base_url}/AddItemAsyn`,item);
+    return this.http.post<IItemRefibra[]>(`${this.base_url}/AddItem?dataSet=${this.data_set}`,{Name: item.title, Text: item.text[0], Image: item.image});
   }
 }
 

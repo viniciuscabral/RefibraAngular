@@ -40,6 +40,7 @@ import { AlifeFileToBase64Module } from 'alife-file-to-base64';
     HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
+      { path: 'Home', component: HomeComponent },
       { path: 'AddItem' , component: InsertItemComponent},
       { path: 'About' , component: AboutComponent },
       { path: 'GraphCytoscape', component: GraphCytoscapeComponent},

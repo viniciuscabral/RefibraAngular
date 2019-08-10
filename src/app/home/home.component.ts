@@ -27,7 +27,10 @@ export class HomeComponent implements OnInit {
     constructor(    
       private restApi: FusekirefibraService,
       private router: Router
-    ) {}
+    ) 
+    { 
+     
+    }
 
   ngOnInit() {
     this.getAllRelationsName();
@@ -39,6 +42,7 @@ export class HomeComponent implements OnInit {
   }
 
   getAllRelationsName(){
+    
     this.restApi.getAllRelationsNames()
     .subscribe(
       (data: []) =>  { //start of (1)
