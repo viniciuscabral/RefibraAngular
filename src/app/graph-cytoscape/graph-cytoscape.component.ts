@@ -60,13 +60,10 @@ export class GraphCytoscapeComponent implements OnInit {
       .subscribe(
         (data: IItemRefibra[]) =>  { //start of (1)
           this.itensRdf = data;
-          console.log("aqui");
-          if(this.itensRdf.length > 0){
+                    if(this.itensRdf.length > 0){
             this.itensRdf.forEach((element)=>{
-              console.log(element);
                 nodesRefibra.push({ data: { id: element.item.replace(prefix,""), nameImg: element.title} });
             });   
-            console.log("passou");
            resolve();                   
           }
           else{
