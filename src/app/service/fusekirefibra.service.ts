@@ -9,8 +9,8 @@ import {IItemRefibraRelation} from 'src/app/basic/itemRefibraRelation.interface'
 })
 export class FusekirefibraService {
 
-  //base_url: string = 'http://api.devcabral.com.br';
-  base_url: string = 'http://localhost:47706';
+  base_url: string = 'http://api.devcabral.com.br';
+  //base_url: string = 'http://localhost:47706';
   data_set: string = 'Refibra';
   constructor(private http: HttpClient) { } 
 
