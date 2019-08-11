@@ -60,10 +60,13 @@ export class GraphCytoscapeComponent implements OnInit {
       .subscribe(
         (data: IItemRefibra[]) =>  { //start of (1)
           this.itensRdf = data;
+          console.log("aqui");
           if(this.itensRdf.length > 0){
             this.itensRdf.forEach((element)=>{
-                nodesRefibra.push({ data: { id: element.item.replace(prefix,""), nameImg: element.image} });
+              console.log(element);
+                nodesRefibra.push({ data: { id: element.item.replace(prefix,""), nameImg: element.title} });
             });   
+            console.log("passou");
            resolve();                   
           }
           else{
@@ -81,6 +84,8 @@ export class GraphCytoscapeComponent implements OnInit {
       .subscribe(
         (data: IItemRefibraRelation[]) =>  { //start of (1)
           this.itensRdfRelation = data;
+          console.log("aqui2");
+          console.log(data);
           if(this.itensRdfRelation.length > 0){
              this.itensRdfRelation.forEach(element=>{
               let item1 = element.item1.replace(prefix,"")
