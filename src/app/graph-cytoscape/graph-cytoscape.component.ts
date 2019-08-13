@@ -96,11 +96,12 @@ export class GraphCytoscapeComponent implements OnInit {
                 relationRefibra.push( { data: { source: item1, target: item2, label:  label}, classes: 'autorotate' } ); 
               }              
             });
-            resolve()
+           
           }
           else{
 
-          }          
+          }    
+          resolve();      
         },
         (error: any)   => console.log(error)
        );
@@ -130,11 +131,12 @@ export class GraphCytoscapeComponent implements OnInit {
                       }                    
                   }
                 });              
-              }); 
-            resolve();              
+              });                           
         }
-        else
+        else{
          throw new Error("No itens found");
+        }
+        resolve();
       }, 
       error => {
         reject(error);        

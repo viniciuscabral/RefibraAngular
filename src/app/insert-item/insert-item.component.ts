@@ -39,7 +39,7 @@ export class InsertItemComponent implements OnInit {
       .subscribe(
         (data: any) =>  {
            this.ngxService.stopAll();
-           this.router.navigate(["/Home"])
+           this.router.navigate(["/GraphCytoscape"])
            resolve();    
         }, 
         (error: any)   => 
