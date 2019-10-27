@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  settings: {
+    BACKEND_API_FUSEKI_URL: 'http://localhost:5000'
+  },
+  production: false,
+  
 };
 
 /*

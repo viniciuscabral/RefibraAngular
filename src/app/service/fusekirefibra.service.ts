@@ -3,19 +3,24 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {IItemRefibra} from 'src/app/basic/itemRefibra.interface'
 import {IItemRefibraRelation} from 'src/app/basic/itemRefibraRelation.interface'
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FusekirefibraService {
 
-  base_url: string = 'http://api.devcabral.com.br:5000';
+  //base_url: string = 'http://api.devcabral.com.br:5000';
   //base_url: string = 'http://localhost:47706';
+
+  base_url: string = environment.settings.BACKEND_API_FUSEKI_URL;
+  
   data_set: string = 'Refibra';
   constructor(private http: HttpClient) { } 
 
   getAllItens(): Observable<IItemRefibra[]>{
-      var target = (document.getElementById('selectDataSet')) as HTMLSelectElement;
+    console.log(this.base_url);
+    var target = (document.getElementById('selectDataSet')) as HTMLSelectElement;
       this.data_set = target.options[target.selectedIndex].text;
       
       console.log('getting all todos from the server');

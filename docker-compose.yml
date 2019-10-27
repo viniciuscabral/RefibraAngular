@@ -7,3 +7,5 @@ services:
     build: .
     ports:
       - '4201:4201'
+    environment:
+        BACKEND_API_FUSEKI_URL: "http://refibra-api:5000"
