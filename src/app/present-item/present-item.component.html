@@ -1,19 +1,19 @@
 <div class="jumbotron">
-    <h1 class="display-8">{{title}}</h1>
+    <h1 class="display-8">{{itemRdf.title}}</h1>
     <!-- 'background-image': "url(data:image/jpg;base64," +(element.data.nameImg)+ ")" -->
     <div id="divImage">
-        <img class="imgItem" [ngStyle]="{'background-image':' url(https://res.cloudinary.com/dixelsjzs/image/upload/v1565234304/Refibra/' + image + ')'}" >
+        <img class="imgItem" [ngStyle]="{'background-image':' url(' + imagePath + ')'}" >
     </div>
     <hr class="my-4">
     <div class="card border-dark mb-3">
         <div class="card-body">
           <h4 class="card-title">Description</h4>
-          <p class="card-text">{{text}}</p>
+          <p class="card-text">{{itemRdf.text}}</p>
         </div>
       </div>
       <hr class="my-4">
     <h2>Item relations</h2>
-    <div *ngFor="let relation of listRelations">
+    <div *ngFor="let relation of itemRdf.listRelation">
         <button style="margin: 2pt" type="button" class="btn btn-outline-primary"
          (click)="graphItem(relation)" >
             {{ relation }}

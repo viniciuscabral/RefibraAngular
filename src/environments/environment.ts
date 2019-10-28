@@ -4,7 +4,8 @@
 
 export const environment = {
   settings: {
-    BACKEND_API_FUSEKI_URL: 'http://localhost:5000'
+    BACKEND_API_FUSEKI_URL: 'http://localhost:47706',
+    IMAGES_PATH: 'https://res.cloudinary.com/dixelsjzs/image/upload/v1565234304/Refibra/'
   },
   production: false,
   

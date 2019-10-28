@@ -8,8 +8,7 @@ import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-insert-item',
-  templateUrl: './insert-item.component.html',
-  styleUrls: ['./insert-item.component.css']
+  templateUrl: './insert-item.component.html'
 })
 export class InsertItemComponent implements OnInit {
 
@@ -25,10 +24,14 @@ export class InsertItemComponent implements OnInit {
     ,private router: Router
   ) {}
 
+  ngOnInit() {
+  }
+
   onSubmit(){    
    let id = Guid.create().toString();
    let obj: IItemRefibra = {item: "", title: id, text: [this.angForm.value.description]
-    ,image: this.angForm.value.imageBase64,listRelation:[],listRelationItem: []};  
+    ,image: this.angForm.value.imageBase64,listRelation:[],listRelationItem: []}; 
+     
     this.setNewItem(obj);
   }
 
@@ -36,18 +39,18 @@ export class InsertItemComponent implements OnInit {
     this.ngxService.start();
     return new Promise(resolve => {
       this.restApi.setNewItem(item)
-      .subscribe(
-        (data: any) =>  {
-           this.ngxService.stopAll();
-           this.router.navigate(["/GraphCytoscape"])
-           resolve();    
-        }, 
-        (error: any)   => 
-        {
-           this.ngxService.stopAll();
-           console.log(error)
-        }
-      );
+          .subscribe(
+            (data: any) =>  {
+              this.ngxService.stopAll();
+              this.router.navigate(["/GraphCytoscape"])
+              resolve();    
+            }, 
+            (error: any)   => 
+            {
+              this.ngxService.stopAll();
+              console.log(error)
+            }
+          );
       });
   }
 
@@ -58,7 +61,6 @@ export class InsertItemComponent implements OnInit {
     this.url = evt[0].base64;
   }
 
-  ngOnInit() {
-  }
+ 
 
 }

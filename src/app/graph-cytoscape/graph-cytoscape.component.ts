@@ -4,7 +4,7 @@ import { IItemRefibra } from "src/app/basic/itemRefibra.interface"
 import { IItemRefibraRelation } from '../basic/itemRefibraRelation.interface';
 import { ActivatedRoute, Router } from '@angular/router'
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-
+import { environment } from 'src/environments/environment';
 const prefix = "http://metadadorefibra.ufpe/";
 var nodesRefibra = [] as  any;
 var relationRefibra = [] as  any;
@@ -214,11 +214,24 @@ export class GraphCytoscapeComponent implements OnInit {
      nodesRefibra.forEach(element => {
         cytoscapeStyle.selector('#' +element.data.id.replace(prefix,""))
           .css({
-          'background-image': "url(https://res.cloudinary.com/dixelsjzs/image/upload/v1565234304/Refibra/" +(element.data.id)+ ".jpg)"
+          'background-image': "url(" +this.verifyImageUrl(element.data.id)+ ")"
         });
       });
 
       this.loadCytoscape(); 
+  }
+
+  verifyImageUrl(id) {
+    
+    let imageUrl: string = "/assets/refibraimg/"+ id + ".jpg";
+    var img = new Image();
+    img.src = imageUrl;              
+    
+    img.onerror = function(){
+      console.log("erro");
+      imageUrl =  environment.settings.IMAGES_PATH + id + ".jpg";        
+    }
+    return imageUrl;
   }
    loadCytoscape(){
     console.log("loadCytoscape");
