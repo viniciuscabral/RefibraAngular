@@ -3,29 +3,38 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
 import { IItemRefibra } from 'src/app/basic/itemRefibra.interface'
 import { environment } from 'src/environments/environment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddNewDescriptionContent } from 'src/app/add-new-description/addnewdescription.component';
+
+//Optei por deixar o modal na mesma tela do componente.
+
 @Component({
     selector: 'present-item-component',
     templateUrl: './present-item.component.html',
     styleUrls: ['./present-item.component.css']
   })  
   
-  export class PresentItemComponent implements OnInit {
-    
+  export class PresentItemComponent implements OnInit {    
+    texts : any = [];
     constructor(private route: ActivatedRoute
         , private restApi: FusekirefibraService
-        , private router: Router){
+        , private router: Router,
+         private modalService: NgbModal){
     }
     
     imagePath: string = "";
     itemRdf: IItemRefibra;
 
+    loadModal(){
+      const modalRef =this.modalService.open(AddNewDescriptionContent);
+      modalRef.componentInstance.itemRefibra = this.itemRdf;
+    }
+
     ngOnInit(): void {
       
         this.route.queryParams
           .subscribe(params => {
-            let valueSearch: string = params['valueSearch'];
-            console.log("aqui");
-            console.log(valueSearch);
+            let valueSearch: string = params['valueSearch'];            
             if(valueSearch !== undefined && valueSearch !== ""){
               this.getItemByname(valueSearch);
             }
@@ -59,7 +68,7 @@ import { environment } from 'src/environments/environment';
               let itemRdf1;
               itemRdf1 = data;
               this.itemRdf = itemRdf1;   
-             console.log(this.itemRdf.listRelation);
+              this.texts = this.itemRdf.text;
               this.verifyImage();
                    
               resolve();
@@ -71,4 +80,5 @@ import { environment } from 'src/environments/environment';
         });
       }
 
+      
 }

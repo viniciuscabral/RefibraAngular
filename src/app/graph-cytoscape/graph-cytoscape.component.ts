@@ -26,7 +26,9 @@ export class GraphCytoscapeComponent implements OnInit {
     private ngxService: NgxUiLoaderService,    
   ) {}
    valueSearch: string;
+   
    ngOnInit(){
+
     nodesRefibra = [];
     relationRefibra = []
     

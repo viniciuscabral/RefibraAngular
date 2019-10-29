@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxUiLoaderModule, NgxUiLoaderRouterModule, NgxUiLoaderHttpModule  } from  'ngx-ui-loader';
 import { AlifeFileToBase64Module } from 'alife-file-to-base64';
-
+import { AddNewDescriptionContent } from './add-new-description/addnewdescription.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,8 @@ import { AlifeFileToBase64Module } from 'alife-file-to-base64';
     InsertItemComponent,
     GraphCytoscapeComponent,
     HomeComponent,
-    PresentItemComponent
+    PresentItemComponent,
+    AddNewDescriptionContent
   ],
   imports: [
     NgbModule,
@@ -47,7 +48,7 @@ import { AlifeFileToBase64Module } from 'alife-file-to-base64';
       { path: 'PresentItem', component: PresentItemComponent}
     ])
   ],  
-  entryComponents: [GraphCytoscapeComponent],
+  entryComponents: [GraphCytoscapeComponent,AddNewDescriptionContent],
   providers: [],
   bootstrap: [AppComponent]
 })

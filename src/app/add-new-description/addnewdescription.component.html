@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 class="modal-title">Do you have another view?</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+ 
+      <div class="modal-body">
+            <form [formGroup]="angForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="exampleTextarea">Write about it</label>
+                    <textarea class="form-control" id="exampleTextarea" rows="3" formControlName="description"></textarea>
+                </div>       
+                <button type="button" class="btn btn-primary" (click)="onSubmit()">add</button>  
+            </form>    
+      </div>  
+
+  
+    <div class="modal-footer">
+    
+            <br/>
+            <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+    </div>
+    

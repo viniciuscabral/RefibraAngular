@@ -42,5 +42,7 @@ export class FusekirefibraService {
   setNewItem(item): Observable<IItemRefibra[]>{
     return this.http.post<IItemRefibra[]>(`${this.base_url}/AddItem?dataSet=${this.data_set}`,{Name: item.title, Text: item.text[0], Image: item.image});
   }
+
+  
 }
 

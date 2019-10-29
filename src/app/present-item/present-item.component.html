@@ -7,10 +7,14 @@
     <hr class="my-4">
     <div class="card border-dark mb-3">
         <div class="card-body">
-          <h4 class="card-title">Description</h4>
-          <p class="card-text">{{itemRdf.text}}</p>
-        </div>
+            <div *ngFor="let text of itemRdf.text" >
+                    <h4 class="card-title">Description</h4>
+                    <p class="card-text">{{text}}</p>
+                    <br/>
+               </div>
+          </div>
       </div>
+      <button type="button" class="btn btn-primary" (click)="loadModal()">Add one more Description</button>  
       <hr class="my-4">
     <h2>Item relations</h2>
     <div *ngFor="let relation of itemRdf.listRelation">
