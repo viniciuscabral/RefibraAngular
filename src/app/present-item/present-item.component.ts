@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'
-import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
-import { IItemRefibra } from 'src/app/basic/itemRefibra.interface'
+import { FusekirefibraService } from 'src/app/service/fusekirefibra.service';
+import { IItemRefibra } from 'src/app/basic/itemRefibra.interface';
 import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddNewDescriptionContent } from 'src/app/add-new-description/addnewdescription.component';
