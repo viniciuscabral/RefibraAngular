@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
             this.datasets = data;
         },
         (error: any)=> {
-          alert("Fail!\n" + error.error.message+"\nTry again.");
+          //alert("Fail!\n" + error.error.message+"\nTry again.");
         }
       )
   }
