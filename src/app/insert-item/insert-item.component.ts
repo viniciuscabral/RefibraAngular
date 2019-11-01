@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
+import { FusekirefibraService } from 'src/app/service/api.service'
 import { IItemRefibra } from "src/app/basic/itemRefibra.interface"
 import { Guid } from "guid-typescript";
 import { NgxUiLoaderService } from 'ngx-ui-loader';

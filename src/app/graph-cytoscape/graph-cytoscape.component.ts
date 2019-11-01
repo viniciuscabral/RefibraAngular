@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
+import { FusekirefibraService } from 'src/app/service/api.service'
 import { IItemRefibra } from "src/app/basic/itemRefibra.interface"
 import { IItemRefibraRelation } from '../basic/itemRefibraRelation.interface';
 import { ActivatedRoute, Router } from '@angular/router'

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
-import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
+import { FusekirefibraService } from 'src/app/service/api.service'
 import {Router} from '@angular/router';
 
 

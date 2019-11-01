@@ -3,7 +3,7 @@ import { NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl } from '@angular/forms';
 import { IItemRefibra } from '../basic/itemRefibra.interface';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { FusekirefibraService } from 'src/app/service/fusekirefibra.service'
+import { FusekirefibraService } from 'src/app/service/api.service'
 import { Router } from '@angular/router'
 
 @Component({

@@ -21,9 +21,13 @@
           </ul>     
           <form class="form-inline my-2 my-lg-0">
               <select id="selectDataSet" class="custom-select" (change)="onChange($event)">
-                  <option value="1">Refibra</option>
-                  <option value="2">Carol</option>
-                  <option value="3">Salcedo</option>
+                   <option value="1">Refibra</option>
+                  <!--<option value="2">Carol</option>
+                  <option value="3">Salcedo</option> -->
+                  <option *ngFor="let dataset of datasets" 
+                        [value]="dataset"  >
+                      {{dataset}}
+                    </option>
                 </select>
           </form>     
         </div>
