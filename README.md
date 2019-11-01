@@ -24,10 +24,10 @@ This research it’s about a practical proposal for the application of Interacti
 
 Docker version 2.1+
 
-git clone https://github.com/viniciuscabral/RefibraAngular.git
-cd RefibraAngular
-docker-compose build
-docker-compose up
+1. git clone https://github.com/viniciuscabral/RefibraAngular.git
+2. cd RefibraAngular
+3. docker-compose build
+4. docker-compose up
 
 ## Navigate
 
