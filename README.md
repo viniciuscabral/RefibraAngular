@@ -33,8 +33,6 @@ Docker version 2.1+
 
 Web Site: http://localhost:4201
 
-# Licenses
-[TODO]
 
 # Others informations
 
