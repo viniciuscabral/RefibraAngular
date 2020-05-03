@@ -1,5 +1,9 @@
 version: '3'
 
+networks:
+  refibra-network:
+    driver: bridge
+
 services:
   refibra-angular:
     container_name: refibra-angular
@@ -9,3 +13,5 @@ services:
       - '4201:4201'
     environment:
         BACKEND_API_FUSEKI_URL: "http://refibra-api:5000"
+    networks:
+        - refibra-network
