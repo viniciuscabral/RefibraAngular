@@ -6,7 +6,11 @@ RUN npm i npm@latest -g
 RUN npm install
 COPY ./ /app/
 ARG env=prod
-RUN npm run build
+ARG BACKEND_API_FUSEKI_URL
+ARG IMAGES_PATH
+ENV BACKEND_API_FUSEKI_URL=$BACKEND_API_FUSEKI_URL
+ENV IMAGES_PATH=$IMAGES_PATH
+RUN npm run build --prod
 
 # Estagio 2 - Será responsavel por expor a aplicação
 FROM nginx:1.13

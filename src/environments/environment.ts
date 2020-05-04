@@ -3,11 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  environment: $ENV.ENVIRONMENT,
   settings: {
-    BACKEND_API_FUSEKI_URL: "http://localhost:5000",
-    IMAGES_PATH: 'https://res.cloudinary.com/dixelsjzs/image/upload/v1565234304/Refibra/'
+    BACKEND_API_FUSEKI_URL: $ENV.BACKEND_API_FUSEKI_URL,
+    IMAGES_PATH: $ENV.IMAGES_PATH
   },
-  production: false,
+  production: true,
 
 };
 
